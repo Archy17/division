@@ -8,6 +8,8 @@ defmodule Division.Chats.Message do
     field :content, :string
     belongs_to :chat, Chat
     belongs_to :user, User
+    belongs_to :producer, Node
+    belongs_to :consumer, Node
 
     timestamps()
   end
@@ -15,7 +17,7 @@ defmodule Division.Chats.Message do
   @doc false
   def changeset(message, params) do
     message
-    |> cast(params, [:chat_id, :content, :user_id])
-    |> validate_required([:chat_id, :content, :user_id])
+    |> cast(params, [:chat_id, :content, :user_id, :producer_id, :consumer_id])
+    |> validate_required([:chat_id, :content, :user_id, :producer_id, :consumer_id])
   end
 end
