@@ -10,7 +10,17 @@
 </div>
 
 <%= for message <- @chat.messages do %>
-  <p class="<%= addressed_message?(message.content, @current_user.username) %>">
-    <%= message.user.username %>: <%= message.content %>
-  </p>
+  <div class="message-container">
+    <div class="avatar-container">
+      <%= avatar(message.user) %>
+    </div>
+    <div class="text-container <%= addressed_message?(message.content, @current_user.username) %>">
+      <div class="username">
+          <strong><%= message.user.username %></strong>
+      </div>
+      <div class="content">
+        <%= message.content %>
+      </div>
+    </div>
+  </div>
 <% end %>

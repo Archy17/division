@@ -5,3 +5,33 @@ body {
 .addressed-message {
   background-color: #ffff80;
 }
+
+.message-container {
+  display: grid;
+  grid-template-columns: 1fr 11fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "image text";
+
+  margin-bottom: 10px;
+}
+
+.avatar-container {
+  grid-area: image;
+}
+
+.avatar {
+  max-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
+.text-container {
+  grid-area: text;
+}
