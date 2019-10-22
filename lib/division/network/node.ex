@@ -14,5 +14,6 @@ defmodule Division.Network.Node do
     node
     |> cast(attrs, [:name, :type])
     |> validate_required([:name, :type])
+    # |> validate_length(:name, min: 9)
   end
 end

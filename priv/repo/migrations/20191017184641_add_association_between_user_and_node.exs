@@ -6,6 +6,6 @@ defmodule Division.Repo.Migrations.AddAssociationBetweenUserAndNode do
       add :node_id, references(:nodes, on_delete: :nothing)
     end
 
-    create index(:user, [:node_id])
+    create index(:users, [:node_id])
   end
 end

@@ -14,6 +14,7 @@ defmodule Division.Accounts.User do
 
     # Durov, put back the wall!
     belongs_to :chat, Chat
+    belongs_to :node, Node
 
     # Virtual fields
     field :password, :string, virtual: true
@@ -25,7 +26,7 @@ defmodule Division.Accounts.User do
   @doc false
   def changeset(user, params) do
     user
-    |> cast(params, [:username, :password, :chat_id, :bio])
+    |> cast(params, [:username, :password, :chat_id, :bio, :node_id])
     |> cast_attachments(params, [:avatar])
     |> validate_required([:username])
     |> unique_constraint(:username)
