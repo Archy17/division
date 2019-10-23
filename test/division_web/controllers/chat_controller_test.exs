@@ -4,9 +4,9 @@ defmodule DivisionWeb.ChatControllerTest do
   alias Division.Chats
   alias Division.Accounts
 
-  @create_attrs %{name: "Leprosorium"}
-  @update_attrs %{name: "Wolchat"}
-  @invalid_attrs %{name: nil}
+  @create_attrs %{"name" => "Leprosorium"}
+  @update_attrs %{"name" => "Wolchat"}
+  @invalid_attrs %{"name" => nil}
   @user %{username: "Grach", password: "yobaboba"}
 
   def fixture(:chat) do
@@ -55,7 +55,7 @@ defmodule DivisionWeb.ChatControllerTest do
         conn
         |> session_conn()
         |> put_session(:current_user_id, user.id)
-        |> post(Routes.chat_path(conn, :create), chat: @create_attrs)
+        |> post(Routes.chat_path(conn, :create), node: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.chat_path(conn, :show, id)
@@ -69,7 +69,7 @@ defmodule DivisionWeb.ChatControllerTest do
         conn
         |> session_conn()
         |> put_session(:current_user_id, user.id)
-        |> post(Routes.chat_path(conn, :create), chat: @invalid_attrs)
+        |> post(Routes.chat_path(conn, :create), node: @invalid_attrs)
         |> html_response(200)
 
       assert response =~ "New Chat"
@@ -100,7 +100,7 @@ defmodule DivisionWeb.ChatControllerTest do
         conn
         |> session_conn()
         |> put_session(:current_user_id, user.id)
-        |> put(Routes.chat_path(conn, :update, chat), chat: @update_attrs)
+        |> put(Routes.chat_path(conn, :update, chat), node: @update_attrs)
 
       assert redirected_to(conn) == Routes.chat_path(conn, :show, chat)
 
@@ -113,24 +113,9 @@ defmodule DivisionWeb.ChatControllerTest do
         conn
         |> session_conn()
         |> put_session(:current_user_id, user.id)
-        |> put(Routes.chat_path(conn, :update, chat), chat: @invalid_attrs)
+        |> put(Routes.chat_path(conn, :update, chat), node: @invalid_attrs)
 
       assert html_response(conn, 200) =~ "Edit Chat"
-    end
-  end
-
-  describe "delete chat" do
-    setup [:create_user]
-    setup [:create_chat]
-
-    test "deletes chosen chat", %{conn: conn, chat: chat, user: user} do
-      conn =
-        conn
-        |> session_conn()
-        |> put_session(:current_user_id, user.id)
-        |> delete(Routes.chat_path(conn, :delete, chat))
-
-      assert redirected_to(conn) == Routes.chat_path(conn, :index)
     end
   end
 

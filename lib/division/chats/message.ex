@@ -3,6 +3,7 @@ defmodule Division.Chats.Message do
   import Ecto.Changeset
   alias Division.Accounts.User
   alias Division.Chats.Chat
+  alias Division.Network.Node
 
   schema "messages" do
     field :content, :string
@@ -18,6 +19,6 @@ defmodule Division.Chats.Message do
   def changeset(message, params) do
     message
     |> cast(params, [:chat_id, :content, :user_id, :producer_id, :consumer_id])
-    |> validate_required([:chat_id, :content, :user_id, :producer_id, :consumer_id])
+    |> validate_required([:content, :producer_id, :consumer_id])
   end
 end

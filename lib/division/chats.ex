@@ -7,35 +7,8 @@ defmodule Division.Chats do
   alias Division.Repo
   alias Division.Chats.Chat
   alias Division.Chats.Message
+  alias Division.Network.Node
 
-  @doc """
-  Returns the list of messages.
-
-  ## Examples
-
-      iex> list_messages()
-      [%Message{}, ...]
-
-  """
-  def list_messages do
-    Repo.all(Message)
-  end
-
-  @doc """
-  Gets a single message.
-
-  Raises `Ecto.NoResultsError` if the Message does not exist.
-
-  ## Examples
-
-      iex> get_message!(123)
-      %Message{}
-
-      iex> get_message!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_message!(id), do: Repo.get!(Message, id)
 
   @doc """
   Creates a message.
@@ -55,39 +28,24 @@ defmodule Division.Chats do
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a message.
 
-  ## Examples
+   @doc """
+   Updates a message.
 
-      iex> update_message(message, %{field: new_value})
-      {:ok, %Message{}}
+   ## Examples
 
-      iex> update_message(message, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+       iex> update_message(message, %{field: new_value})
+       {:ok, %Message{}}
 
-  """
-  def update_message(%Message{} = message, attrs) do
-    message
-    |> Message.changeset(attrs)
-    |> Repo.update()
-  end
+       iex> update_message(message, %{field: bad_value})
+       {:error, %Ecto.Changeset{}}
 
-  @doc """
-  Deletes a Message.
-
-  ## Examples
-
-      iex> delete_message(message)
-      {:ok, %Message{}}
-
-      iex> delete_message(message)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_message(%Message{} = message) do
-    Repo.delete(message)
-  end
+   """
+   def update_message(%Message{} = message, attrs) do
+     message
+     |> Message.changeset(attrs)
+     |> Repo.update()
+   end
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking message changes.
@@ -118,39 +76,41 @@ defmodule Division.Chats do
   """
   def list_chats do
     query =
-      from chat in Chat,
-        where: chat.private == false
+      from node in Node,
+        where: node.type == "chat"
 
     Repo.all(query)
   end
 
-  @doc """
-  Gets a single chat.
+  @doc false
+  def get_chat!(id), do: Repo.get!(Node, id)
 
-  Raises `Ecto.NoResultsError` if the Chat does not exist.
+  @doc """
+  Gets a single chat Node.
+
+  Raises `Ecto.NoResultsError` if the chat Node does not exist.
 
   ## Examples
 
-      iex> get_chat!(123)
-      %Chat{}
+      iex> get_chat(123)
+      %Node{}
 
-      iex> get_chat!(456)
+      iex> get_chat(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_chat!(id), do: Repo.get!(Chat, id)
-
   def get_chat_with_messages(chat_id) do
     msg_query =
       from msg in Message,
         limit: 2048,
         order_by: [desc: msg.inserted_at],
-        preload: [:user]
+        preload: [:producer]
 
     query =
-      from c in Chat,
-        where: c.id == ^chat_id,
-        preload: [messages: ^msg_query]
+      from n in Node,
+        where: n.id == ^chat_id,
+        where: n.type == "chat",
+        preload: [inbox: ^msg_query]
 
     Repo.one(query)
   end
@@ -168,55 +128,39 @@ defmodule Division.Chats do
 
   """
   def create_chat(attrs \\ %{}) do
-    %Chat{}
-    |> Chat.changeset(attrs)
+    %Node{}
+    |> Node.changeset(Map.merge(attrs, %{"type" => "chat"}))
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a chat.
+   @doc """
+   Returns an `%Ecto.Changeset{}` for tracking chat changes.
 
-  ## Examples
+   ## Examples
 
-      iex> update_chat(chat, %{field: new_value})
-      {:ok, %Chat{}}
+       iex> change_chat(chat)
+       %Ecto.Changeset{source: %Chat{}}
 
-      iex> update_chat(chat, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+   """
+   def change_chat(%Node{} = chat) do
+     Node.changeset(chat, %{"type" => "chat"})
+   end
 
-  """
-  def update_chat(%Chat{} = chat, attrs) do
-    chat
-    |> Chat.changeset(attrs)
-    |> Repo.update()
-  end
+   @doc """
+   Updates a chat.
 
-  @doc """
-  Deletes a Chat.
+   ## Examples
 
-  ## Examples
+       iex> update_chat(chat, %{field: new_value})
+       {:ok, %Chat{}}
 
-      iex> delete_chat(chat)
-      {:ok, %Chat{}}
+       iex> update_chat(chat, %{field: bad_value})
+       {:error, %Ecto.Changeset{}}
 
-      iex> delete_chat(chat)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_chat(%Chat{} = chat) do
-    Repo.delete(chat)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking chat changes.
-
-  ## Examples
-
-      iex> change_chat(chat)
-      %Ecto.Changeset{source: %Chat{}}
-
-  """
-  def change_chat(%Chat{} = chat) do
-    Chat.changeset(chat, %{})
-  end
+   """
+   def update_chat(%Node{} = chat, attrs) do
+     chat
+     |> Node.changeset(attrs)
+     |> Repo.update()
+   end
 end

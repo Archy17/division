@@ -3,6 +3,7 @@ defmodule Division.MessagesTest do
 
   alias Division.Chats
   alias Division.Accounts
+  alias Division.Network.Node
 
   describe "messages" do
     alias Division.Chats.Message
@@ -15,17 +16,20 @@ defmodule Division.MessagesTest do
     end
 
     def fixture(:user) do
-      {:ok, user} = Accounts.create_user(%{password: "some_password", username: "goomba"})
+      {:ok, user} =
+        %Node{}
+        |> Node.changeset(%{"name" => "goomba", "type" => "person"})
+        |> Repo.insert()
       user
     end
 
     def fixture(:chat) do
-      {:ok, chat} = Chats.create_chat(%{name: "Leprosorium"})
+      {:ok, chat} = Chats.create_chat(%{"name" => "Leprosorium"})
       chat
     end
 
     defp valid_attrs(user, chat) do
-      %{content: "some content", user_id: user.id, chat_id: chat.id}
+      %{content: "some content", producer_id: user.id, consumer_id: chat.id}
     end
 
     defp create_user(_) do
@@ -40,16 +44,6 @@ defmodule Division.MessagesTest do
 
     @update_attrs %{content: "some updated content"}
     @invalid_attrs %{content: nil}
-
-    test "list_messages/0 returns all messages", %{user: user, chat: chat} do
-      message = message_fixture(user, chat)
-      assert Chats.list_messages() == [message]
-    end
-
-    test "get_message!/1 returns the message with given id", %{user: user, chat: chat} do
-      message = message_fixture(user, chat)
-      assert Chats.get_message!(message.id) == message
-    end
 
     test "create_message/1 with valid data creates a message", %{user: user, chat: chat} do
       assert {:ok, %Message{} = message} = Chats.create_message(valid_attrs(user, chat))
@@ -69,13 +63,6 @@ defmodule Division.MessagesTest do
     test "update_message/2 with invalid data returns error changeset", %{user: user, chat: chat} do
       message = message_fixture(user, chat)
       assert {:error, %Ecto.Changeset{}} = Chats.update_message(message, @invalid_attrs)
-      assert message == Chats.get_message!(message.id)
-    end
-
-    test "delete_message/1 deletes the message", %{user: user, chat: chat} do
-      message = message_fixture(user, chat)
-      assert {:ok, %Message{}} = Chats.delete_message(message)
-      assert_raise Ecto.NoResultsError, fn -> Chats.get_message!(message.id) end
     end
 
     test "change_message/1 returns a message changeset", %{user: user, chat: chat} do

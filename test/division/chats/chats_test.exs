@@ -4,11 +4,11 @@ defmodule Division.ChatsTest do
   alias Division.Chats
 
   describe "chats" do
-    alias Division.Chats.Chat
+    alias Division.Network.Node
 
-    @valid_attrs %{name: "some name", private: false}
-    @update_attrs %{name: "some updated name"}
-    @invalid_attrs %{name: nil}
+    @valid_attrs %{"name" => "some name"}
+    @update_attrs %{"name" => "some updated name"}
+    @invalid_attrs %{"name" => nil}
 
     def chat_fixture(attrs \\ %{}) do
       {:ok, chat} =
@@ -24,13 +24,15 @@ defmodule Division.ChatsTest do
       assert Chats.list_chats() == [chat]
     end
 
-    test "get_chat!/1 returns the chat with given id" do
+    test "get_chat_with_messages/1 returns the chat with given id" do
       chat = chat_fixture()
-      assert Chats.get_chat!(chat.id) == chat
+      loaded_chat = Chats.get_chat_with_messages(chat.id)
+      assert loaded_chat.name == "some name"
+      assert loaded_chat.inbox == []
     end
 
     test "create_chat/1 with valid data creates a chat" do
-      assert {:ok, %Chat{} = chat} = Chats.create_chat(@valid_attrs)
+      assert {:ok, %Node{} = chat} = Chats.create_chat(@valid_attrs)
       assert chat.name == "some name"
     end
 
@@ -40,20 +42,14 @@ defmodule Division.ChatsTest do
 
     test "update_chat/2 with valid data updates the chat" do
       chat = chat_fixture()
-      assert {:ok, %Chat{} = chat} = Chats.update_chat(chat, @update_attrs)
+      assert {:ok, %Node{} = chat} = Chats.update_chat(chat, @update_attrs)
       assert chat.name == "some updated name"
     end
 
     test "update_chat/2 with invalid data returns error changeset" do
       chat = chat_fixture()
       assert {:error, %Ecto.Changeset{}} = Chats.update_chat(chat, @invalid_attrs)
-      assert chat == Chats.get_chat!(chat.id)
-    end
-
-    test "delete_chat/1 deletes the chat" do
-      chat = chat_fixture()
-      assert {:ok, %Chat{}} = Chats.delete_chat(chat)
-      assert_raise Ecto.NoResultsError, fn -> Chats.get_chat!(chat.id) end
+      assert Chats.get_chat_with_messages(chat.id).name == "some name" # same name
     end
 
     test "change_chat/1 returns a chat changeset" do

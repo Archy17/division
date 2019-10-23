@@ -29,7 +29,7 @@ defmodule DivisionWeb.ChatLiveView do
 
   def handle_event("message", %{"message" => message_params}, socket) do
     {:ok, message} = Chats.create_message(message_params)
-    chat = Chats.get_chat_with_messages(message.chat_id)
+    chat = Chats.get_chat_with_messages(message.consumer_id)
     DivisionWeb.Endpoint.broadcast_from(self(), topic(chat.id), "message", %{chat: chat})
     {:noreply, assign(socket, chat: chat, message: Chats.change_message())}
   end

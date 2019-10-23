@@ -9,9 +9,6 @@
   <%= text_input f, :name %>
   <%= error_tag f, :name %>
 
-  <%= label f, :private %>
-  <%= checkbox f, :private %>
-
   <div>
     <%= submit "Save" %>
   </div>

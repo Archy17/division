@@ -2,7 +2,8 @@ defmodule DivisionWeb.ChatController do
   use DivisionWeb, :controller
 
   alias Division.Chats
-  alias Division.Chats.Chat
+  alias Division.Network.Node
+
   alias Phoenix.LiveView
   alias DivisionWeb.ChatLiveView
 
@@ -12,11 +13,11 @@ defmodule DivisionWeb.ChatController do
   end
 
   def new(conn, _params) do
-    changeset = Chats.change_chat(%Chat{})
+    changeset = Chats.change_chat(%Node{})
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"chat" => chat_params}) do
+  def create(conn, %{"node" => chat_params}) do
     case Chats.create_chat(chat_params) do
       {:ok, chat} ->
         conn
@@ -38,32 +39,23 @@ defmodule DivisionWeb.ChatController do
     )
   end
 
-  def edit(conn, %{"id" => id}) do
-    chat = Chats.get_chat!(id)
-    changeset = Chats.change_chat(chat)
-    render(conn, "edit.html", chat: chat, changeset: changeset)
-  end
+   def edit(conn, %{"id" => id}) do
+     chat = Chats.get_chat!(id)
+     changeset = Chats.change_chat(chat)
+     render(conn, "edit.html", node: chat, changeset: changeset)
+   end
 
-  def update(conn, %{"id" => id, "chat" => chat_params}) do
-    chat = Chats.get_chat!(id)
+   def update(conn, %{"id" => id, "node" => chat_params}) do
+     chat = Chats.get_chat!(id)
 
-    case Chats.update_chat(chat, chat_params) do
-      {:ok, chat} ->
-        conn
-        |> put_flash(:info, "Chat updated successfully.")
-        |> redirect(to: Routes.chat_path(conn, :show, chat))
+     case Chats.update_chat(chat, chat_params) do
+       {:ok, chat} ->
+         conn
+         |> put_flash(:info, "Chat updated successfully.")
+         |> redirect(to: Routes.chat_path(conn, :show, chat))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", chat: chat, changeset: changeset)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    chat = Chats.get_chat!(id)
-    {:ok, _chat} = Chats.delete_chat(chat)
-
-    conn
-    |> put_flash(:info, "Chat deleted successfully.")
-    |> redirect(to: Routes.chat_path(conn, :index))
-  end
+       {:error, %Ecto.Changeset{} = changeset} ->
+         render(conn, "edit.html", node: chat, changeset: changeset)
+     end
+   end
 end
