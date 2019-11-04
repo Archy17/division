@@ -11,7 +11,7 @@ To start your Phoenix server:
   1. `cp .env-dist .env`
   2. Edit .env .
   3. `docker-compose build` -- build images.
-  4. `docker-compose up`. If you need rebuild for changes `docker-compose down && docker-compose up --build` .
+  4. `docker-compose up`. If you need rebuild for changes `docker-compose up --build`. Stop containers `docker-compose stop` .
   
   **Note if you run `docker-compose down` -- you will lose all data in containers (db, web, etc)**
 
