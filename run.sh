@@ -22,7 +22,7 @@ echo "\nInstalling JS..."
 npm install --prefix ./assets
 
 # Wait for Postgres to become available.
-until psql -h db -U "postgres" -c '\q' 2>/dev/null; do
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -c '\q' 2>/dev/null; do
   >&2 echo "Postgres is unavailable - sleeping"
   sleep 1
 done
