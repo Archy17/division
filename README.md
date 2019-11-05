@@ -7,6 +7,15 @@ To start your Phoenix server:
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
 
+## Docker
+  1. `cp .env-dist .env`
+  2. Edit .env .
+  3. `docker-compose build` -- build images.
+  4. `docker-compose up`. If you need rebuild for changes `docker-compose up --build`. Stop containers `docker-compose stop` .
+  
+  **Note if you run `docker-compose down` -- you will lose all data in containers (db, web, etc)**
+
+
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
