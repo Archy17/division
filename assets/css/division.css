@@ -1,13 +1,10 @@
-
 .message-container {
   display: grid;
   max-width: 500px; 
   grid-template-rows: 1fr;
   grid-template-areas: "image text";
-  grid-gap: 1px;
- 
-  
-}
+  grid-gap: 1px; 
+ }
 
 .text-container {
   grid-template-columns: repeat(3, 1fr);
@@ -24,15 +21,13 @@
 
 .content {
   grid-area: c;
-  max-width: 1000px;
- 
+  max-width: 1000px; 
   word-break:break-all;
 }
 
 .avatar-container {
   grid-area: a;
-  grid-area: image;
- 
+  grid-area: image; 
 }
 
 .avatar {
@@ -48,17 +43,14 @@
   font-size: 1.5em;
 }
 
-
 .time-right {
   float: right;
-  color: #aaa;
-  
+  color: #aaa;  
 }
 
 .username {
   grid-area: b;
  }
-
 
 .addressed-message {
   background-color: #ffff80;
