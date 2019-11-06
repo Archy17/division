@@ -19,4 +19,17 @@ defmodule DivisionWeb.ChatView do
     Division.Avatar.url({avatar, user}, :thumb, signed: true)
     |> img_tag(class: "avatar")
   end
+  
+  def date_time(%{inserted_at: time_in_db}) do
+    native_datetime = DateTime.to_naive(DateTime.utc_now)
+    native_date = NaiveDateTime.to_date(native_datetime)
+    native_date_db = NaiveDateTime.to_date(time_in_db)
+    
+      case Date.compare(native_date, native_date_db) do
+       :gt -> time_in_db
+       :lt -> "Something went wrong"
+       :eq -> NaiveDateTime.to_time(time_in_db)
+       end
+   end
+  
 end
