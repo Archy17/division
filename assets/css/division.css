@@ -1,27 +1,43 @@
-body {
-  color: #666;
-}
-
-.addressed-message {
-  background-color: #ffff80;
-}
 
 .message-container {
   display: grid;
-  grid-template-columns: 1fr 11fr;
+  max-width: 500px; 
   grid-template-rows: 1fr;
   grid-template-areas: "image text";
+  grid-gap: 1px;
+ 
+  
+}
 
-  margin-bottom: 10px;
+.text-container {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 500px;
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 2px 0;
+  grid-template-areas: 
+    "a b c"
+    "a b c";
+}
+
+.content {
+  grid-area: c;
+  max-width: 1000px;
+ 
+  word-break:break-all;
 }
 
 .avatar-container {
+  grid-area: a;
   grid-area: image;
+ 
 }
 
 .avatar {
-  max-width: 50px;
-  min-height: 50px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: gray;
   display: flex;
@@ -32,6 +48,18 @@ body {
   font-size: 1.5em;
 }
 
-.text-container {
-  grid-area: text;
+
+.time-right {
+  float: right;
+  color: #aaa;
+  
+}
+
+.username {
+  grid-area: b;
+ }
+
+
+.addressed-message {
+  background-color: #ffff80;
 }
