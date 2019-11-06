@@ -21,6 +21,7 @@
 
 .content {
   grid-area: c;
+  margin: 0 70px;
   max-width: 1000px; 
   word-break:break-all;
 }
@@ -49,7 +50,8 @@
 }
 
 .username {
-  grid-area: b;
+    grid-area: b;
+    margin: 0 70px;
  }
 
 .addressed-message {
