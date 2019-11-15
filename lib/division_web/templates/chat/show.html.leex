@@ -11,19 +11,15 @@
 
 <%= for message <- @chat.messages do %>
   <div class="message-container">
-   <div class="text-container <%= addressed_message?(message.content, @current_user.username) %>">
-     
-      <div class="avatar-container" style="float:left">
-        <%= avatar(message.user) %>
-      </div>
-
+    <div class="avatar-container">
+      <%= avatar(message.user) %>
+    </div>
+    <div class="text-container <%= addressed_message?(message.content, @current_user.username) %>">
       <div class="username">
           <strong><%= message.user.username %></strong>
       </div>
-     
       <div class="content">
-        <%= message.content %> 
-        <span class="time-right"><%= date_time(message) %></span>
+        <%= message.content %> <%= date_time(message) %>
       </div>
     </div>
   </div>
