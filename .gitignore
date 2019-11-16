@@ -35,3 +35,6 @@ npm-debug.log
 /uploads/
 .idea
 .deliver/releases/
+
+# Elixir Language Server
+.elixir_ls/
