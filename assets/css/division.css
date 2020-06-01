@@ -7,6 +7,11 @@ body {
 }
 
 .message-container {
+  max-width: 500px;
+  grid-area: 600px;
+  white-space: normal;
+  grid-auto-flow: row;
+
   display: grid;
   grid-template-columns: 1fr 11fr;
   grid-template-rows: 1fr;
@@ -33,5 +38,22 @@ body {
 }
 
 .text-container {
-  grid-area: text;
+  max-width: 500px;
+  display: grid;
+  grid-area: 600px;
+  background-color: #dedede;
+ max-width: 300px;
+ white-space: normal;
+ grid-auto-flow: row;
+ color: red;
+ width: 500px;
+ word-break: break-all;
+ table-layout: fixed;
+ box-sizing: border-box;
+}
+
+
+.paginator-list li[disabled] a {
+  opacity: .4;
+  pointer-events: none;
 }

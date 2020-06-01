@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :division, Division.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "q",
+  password: "q",
   database: "division_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

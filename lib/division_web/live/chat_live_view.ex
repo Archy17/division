@@ -9,7 +9,8 @@ defmodule DivisionWeb.ChatLiveView do
   end
 
   def mount(%{chat: chat, current_user: current_user}, socket) do
-    DivisionWeb.Endpoint.subscribe(topic(chat.id))
+    chat_id = 666
+    DivisionWeb.Endpoint.subscribe(topic(chat_id))
 
     {:ok,
      assign(socket,
@@ -24,6 +25,7 @@ defmodule DivisionWeb.ChatLiveView do
   end
 
   def handle_event("message", %{"message" => %{"content" => ""}}, socket) do
+    IO.puts "--  --  --"
     {:noreply, socket}
   end
 

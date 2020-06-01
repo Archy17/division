@@ -7,6 +7,8 @@ defmodule Division.Chats do
   alias Division.Repo
   alias Division.Chats.Chat
   alias Division.Chats.Message
+  
+
 
   @doc """
   Returns the list of messages.
@@ -141,18 +143,21 @@ defmodule Division.Chats do
   def get_chat!(id), do: Repo.get!(Chat, id)
 
   def get_chat_with_messages(chat_id) do
+ 
     msg_query =
-      from msg in Message,
-        limit: 2048,
+        from msg in Message,
+        limit: 5,
         order_by: [desc: msg.inserted_at],
         preload: [:user]
 
-    query =
-      from c in Chat,
+        query =
+        from c in Chat,
         where: c.id == ^chat_id,
         preload: [messages: ^msg_query]
 
     Repo.one(query)
+
+
   end
 
   @doc """

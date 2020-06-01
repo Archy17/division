@@ -28,9 +28,12 @@ defmodule DivisionWeb.ChatController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    chat = Chats.get_chat_with_messages(id)
-
+  def show(conn, %{"id" => chat_id}) do
+    IO.puts "-----------------"
+    chat = Chats.get_chat_with_messages(chat_id)
+    IO.puts "---"
+        IO.inspect(chat)
+    IO.puts "------"
     LiveView.Controller.live_render(
       conn,
       ChatLiveView,
