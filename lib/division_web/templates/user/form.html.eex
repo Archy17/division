@@ -33,7 +33,7 @@
     <%= if @action == "/register" do %>
       <%= submit "Sign up!" %>
       <span><%= link "already have account?", to: Routes.session_path(@conn, :new) %></span>
-    <%= else %>
+    <% else %>
       <%= submit "Save changes." %>
     <% end %>
   </div>

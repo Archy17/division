@@ -4,7 +4,7 @@
     <%= case @user.avatar do %>
       <%= nil -> %>
         <span>...</span>
-      <%= _ -> %>
+      <% _ -> %>
         <%= Division.Avatar.url({@user.avatar, @user}, :thumb, signed: true) |> img_tag %>
     <% end %>
     <p><%= @user.bio %></p>
@@ -20,7 +20,7 @@
     <%= case @chat do %>
       <%= nil -> %>
         <span>Chat is not atached.</span>
-      <%= _ -> %>
+      <% _ -> %>
         <%= for message <- @chat.messages do %>
           <p>
             <%= message.user.username %>: <%= message.content %>

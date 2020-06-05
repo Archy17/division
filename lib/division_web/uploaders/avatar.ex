@@ -35,7 +35,7 @@ defmodule Division.Avatar do
   def asset_host, do: "cdn.division.im"
 
   # Override the storage directory:
-  def storage_dir(version, {file, scope}) do
+  def storage_dir(_version, {_file, scope}) do
     "uploads/user/avatars/#{scope.id}"
   end
 

@@ -7,7 +7,7 @@ defmodule DivisionWeb.Plugs.Auth do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    user_id = Plug.Conn.get_session(conn, :current_user_id)
+    Plug.Conn.get_session(conn, :current_user_id)
     conn = get_user_from_session(conn, {})
 
     if conn.assigns[:current_user] do
