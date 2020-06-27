@@ -28,20 +28,22 @@ defmodule DivisionWeb.ChatController do
     end
   end
 
+
+
     def show(conn, %{"id" => chat_id}) do
       IO.puts "------чат ид-----------"
       IO.inspect (chat_id)
       IO.puts "-------дальше конн----------"
-    ## IO.inspect (conn)
+    #IO.inspect (conn)
     IO.puts "--------дальше получение списка сообщений по чат ид---------"
     chat = Chats.get_chat_with_messages(chat_id)
     IO.puts "----дальше инспект чат--"
-       ## IO.inspect(chat)
+       IO.inspect(chat)
     IO.puts "-- дальше пошло на лай вью----"
     LiveView.Controller.live_render(
       conn,
       ChatLiveView,
-      session: %{chat: chat, current_user: conn.assigns.current_user}
+      session: %{conn: conn, chat: chat, current_user: conn.assigns.current_user}
     )
   end
 

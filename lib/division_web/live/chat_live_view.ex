@@ -8,7 +8,7 @@ defmodule DivisionWeb.ChatLiveView do
     DivisionWeb.ChatView.render("show.html", assigns)
   end
 
-  def mount(%{chat: chat, current_user: current_user}, socket) do
+  def mount(%{conn: conn, chat: chat, current_user: current_user}, socket) do
     ##chat_id = 666
    # DivisionWeb.Endpoint.subscribe(topic(chat.id))
    #         IO.puts "+++++++++Моунт++++++++"
@@ -16,11 +16,15 @@ defmodule DivisionWeb.ChatLiveView do
    #         IO.puts "+++++++++Моунт++++++++"
     {:ok,
      assign(socket,
+      conn: conn,
        chat: chat,
        message: Chats.change_message(),
        current_user: current_user
      )}
   end
+
+
+  ## handle - обработка (события)
 
   def handle_info(%{event: "message", payload: state}, socket) do
            IO.puts "++++++++ИНФО++++++++"
@@ -34,7 +38,7 @@ defmodule DivisionWeb.ChatLiveView do
 
   def handle_event("message", %{"message" => message_params}, socket) do
     {:ok, message} = Chats.create_message(message_params)
-    IO.puts "++++Второй эвент ---  Запись сообщения в бд -- ++++++"
+    IO.puts "++++Второй эвент --- Запись сообщения в бд -- ++++++"
     chat = Chats.get_chat_with_messages(message.chat_id)
     DivisionWeb.Endpoint.broadcast_from(self(), topic(chat.id), "message", %{chat: chat})
     {:noreply, assign(socket, chat: chat, message: Chats.change_message())}

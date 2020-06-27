@@ -3,6 +3,10 @@ defmodule DivisionWeb.ChatView do
 
   alias Division.Accounts.User
 
+  def find_name(%{list: list}) do
+    list
+  end
+
   def addressed_message?(message, username) do
     cond do
       String.contains?(message, "@#{username}") -> "addressed-message"
@@ -19,6 +23,9 @@ defmodule DivisionWeb.ChatView do
     Division.Avatar.url({avatar, user}, :thumb, signed: true)
     |> img_tag(class: "avatar")
   end
+
+  
+
 
   def date_time(%{inserted_at: inserted_at}) do
     native_datetime = DateTime.to_naive(DateTime.utc_now)
