@@ -27,6 +27,10 @@ defmodule Division.Paginator do
     paginate(chat_id, 1)
   end
 
+  #def paginate(chat_id, page) when page == 1 do
+  #  paginate(chat_id, 1)
+  #end
+
   def paginate(chat_id, page) when is_binary(page) do
     paginate(chat_id, String.to_integer(page))
   end
@@ -53,7 +57,7 @@ defmodule Division.Paginator do
         from msg in Message,
         limit: (^@results_per_page) ,
         offset: ((^page - 1) * ^@results_per_page),
-        order_by: [desc: msg.inserted_at],
+        order_by: [asc: msg.inserted_at],
         preload: [:user]
 
         query =
@@ -72,13 +76,14 @@ defmodule Division.Paginator do
   end
 
   defp count_total_results(chat_id) do
-    msges = from c in Chat,
-      select: c
-    Repo.aggregate(msges, :count, :id)
+    query = from m in Message, where: (m.chat_id == ^chat_id), select: m
+       
+
+      Repo.aggregate(query, :count, :chat_id)
   end
 
   defp count_total_pages(total_results) do
-    total_pages = total_results / @results_per_page
+    total_pages = total_results / @results_per_page |> ceil
 
     if total_pages > 1, do: total_pages, else: 1
   end

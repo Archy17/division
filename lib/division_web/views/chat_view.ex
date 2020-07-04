@@ -2,10 +2,15 @@ defmodule DivisionWeb.ChatView do
   use DivisionWeb, :view
 
   alias Division.Accounts.User
+  alias DivisionWeb.Helpers.PaginatorHelper, as: PH
 
-  def find_name(%{list: list}) do
-    list
-  end
+  #def find_name(%{list: list}) do
+  #  list.name
+  #end
+
+  #def find_conn(conn) do
+  #  conn
+  #end
 
   def addressed_message?(message, username) do
     cond do

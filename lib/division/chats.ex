@@ -142,10 +142,10 @@ defmodule Division.Chats do
   """
   def get_chat!(id), do: Repo.get!(Chat, id)
 
-  def get_chat_with_messages(chat_id) do
+  def get_chat_with_messages(chat_id, params) do
     #chat_id = params
-     page = 1
-      Paginator.paginate(chat_id, page)
+     #page = conn.query_params
+      Paginator.paginate(chat_id, params["page"])
    # msg_query =
    #     from msg in Message,
    #     limit: 5,

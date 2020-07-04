@@ -30,13 +30,17 @@ defmodule DivisionWeb.ChatController do
 
 
 
-    def show(conn, %{"id" => chat_id}) do
+    def show(conn, params) do
+      IO.puts "------ПАРАМСЫ-----------"
+      IO.inspect (params)
+      IO.puts "-------дальше появление chat_id -------"
+           chat_id = String.to_integer(conn.path_params["id"])
       IO.puts "------чат ид-----------"
       IO.inspect (chat_id)
-      IO.puts "-------дальше конн----------"
-    #IO.inspect (conn)
+      IO.puts "-------дальше конн-------"
+    IO.inspect (conn)
     IO.puts "--------дальше получение списка сообщений по чат ид---------"
-    chat = Chats.get_chat_with_messages(chat_id)
+    chat = Chats.get_chat_with_messages(chat_id, params)
     IO.puts "----дальше инспект чат--"
        IO.inspect(chat)
     IO.puts "-- дальше пошло на лай вью----"
