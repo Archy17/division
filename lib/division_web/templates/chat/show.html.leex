@@ -1,5 +1,23 @@
 <h2><%= @chat.list.name %></h2>
 
+
+ <style>
+   ul.hr {
+    margin: 0; /* Обнуляем значение отступов */
+    padding: 4px; /* Значение полей */
+   }
+   ul.hr li {
+    display: inline; /* Отображать как строчный элемент */
+    margin-right: 5px; /* Отступ слева */
+    border: 1px solid #000; /* Рамка вокруг текста */
+    padding: 3px; /* Поля вокруг текста */
+   }
+  </style>
+
+
+
+
+
 <div class="form-group">
   <%= form_for @message, "#", [phx_change: :typing, phx_submit: :message], fn _f -> %>
     <%= text_input :message, :content, value: @message.changes[:content], phx_blur: "stop_typing", placeholder: "write your message here...", autocomplete: "off" %>

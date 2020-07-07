@@ -10,6 +10,12 @@ defmodule DivisionWeb.Helpers.PaginatorHelper do
     pages = page_buttons(conn, data)
     last = next_button(conn, data)
 
+        IO.puts "-------data data data----------"
+        IO.inspect (data)
+        IO.puts "-------дальше после data -------"
+
+
+
     content_tag(:ul, [first, pages, last], class: class)
   end
 
@@ -17,6 +23,9 @@ defmodule DivisionWeb.Helpers.PaginatorHelper do
     page = data.current_page - 1
     disabled = data.current_page == 1
     params = build_params(conn, page)
+        IO.puts "------Опять ПАРАМСЫ в хелпере-----------"
+        IO.inspect (page)
+        IO.puts "-------дальше появление совсем хз -------"
 
     content_tag(:li, disabled: disabled) do
       link to: "?#{params}", rel: "prev" do
@@ -31,6 +40,10 @@ defmodule DivisionWeb.Helpers.PaginatorHelper do
       disabled = data.current_page == page
       params = build_params(conn, page)
 
+        IO.puts "------Опять ПАРАМСЫ 222222222 в хелпере-----------"
+        IO.inspect (page)
+        IO.puts "-------дальше появление совсем хз -------"
+
       content_tag(:li, class: class, disabled: disabled) do
         link(page, to: "?#{params}")
       end
@@ -42,6 +55,11 @@ defmodule DivisionWeb.Helpers.PaginatorHelper do
     disabled = data.current_page >= data.total_pages
     params = build_params(conn, page)
 
+        IO.puts "------Опять ПАРАМСЫ 333333333 в хелпере-----------"
+        IO.inspect (page)
+        IO.puts "-------дальше появление совсем хз -------"
+
+
     content_tag(:li, disabled: disabled) do
       link to: "?#{params}", rel: "next" do
         ">"
@@ -50,6 +68,24 @@ defmodule DivisionWeb.Helpers.PaginatorHelper do
   end
 
   defp build_params(conn, page) do
-    conn.query_params |> Map.put(:page, page) |> URI.encode_query()
+
+        IO.puts "------Опять ПАРАМСЫ В БИЛД ПАРМСАХ В ДЕПФ в хелпере-----------"
+        IO.inspect (page)
+        IO.puts "-------дальше появление совсем хз -------"
+   
+     
+   case Map.equal?(conn.query_params, %{}) do
+      true ->  conn.query_params |> Map.put(:page, page) |> URI.encode_query()
+      false -> conn.query_params |> Map.delete("page") |> Map.put(:page, page) |> URI.encode_query()
+   end
+
+   # IO.puts "------Опять ПАРАМСЫ u_r_i u_r_i u_r_i u_r_i в хелпере-----------"
+
+        #  IO.inspect (:page)
+        #  IO.inspect (page)     u_r_i = 
+
+        # IO.inspect (u_r_i)
+        # IO.puts "-------дальше появление u_r_i u_r_i совсем хз -------"
+
   end
 end
