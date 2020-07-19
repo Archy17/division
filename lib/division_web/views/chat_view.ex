@@ -2,15 +2,17 @@ defmodule DivisionWeb.ChatView do
   use DivisionWeb, :view
 
   alias Division.Accounts.User
-  alias DivisionWeb.Helpers.PaginatorHelper, as: PH
+  # alias DivisionWeb.Helpers.PaginatorHelper, as: PH
 
   #def find_name(%{list: list}) do
   #  list.name
   #end
 
-  #def find_conn(conn) do
-  #  conn
-  #end
+   def find_conn(conn) do
+     conn
+   end
+
+
 
   def addressed_message?(message, username) do
     cond do
@@ -29,7 +31,7 @@ defmodule DivisionWeb.ChatView do
     |> img_tag(class: "avatar")
   end
 
-  
+
 
 
   def date_time(%{inserted_at: inserted_at}) do

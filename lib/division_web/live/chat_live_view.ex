@@ -1,26 +1,27 @@
 defmodule DivisionWeb.ChatLiveView do
   use Phoenix.LiveView
+  # use Phoenix.Router
+  # alias Division.Router
+
   alias Division.Chats
 
   defp topic(chat_id), do: "chat:#{chat_id}"
 
   def render(assigns) do
     DivisionWeb.ChatView.render("show.html", assigns)
+     #IO.puts "+++++++++Рендер ассигнсов ++++++++"
   end
 
-  def mount(%{conn: conn, chat: chat, current_user: current_user}, socket) do
+  def mount(%{chat: chat, current_user: current_user}, socket) do
+    # back = Division.Router.chat_path(socket, :show)
     ##chat_id = 666
-   # DivisionWeb.Endpoint.subscribe(topic(chat.id))
-   #         IO.puts "+++++++++Моунт++++++++"
+   # DivisionWeb.Endpoint.subscribe(topic(chat.list.id))
+            IO.puts "+++++++++Моунт++++++++"
    #         IO.inspect(topic(chat.id))
    #         IO.puts "+++++++++Моунт++++++++"
+
     {:ok,
-     assign(socket,
-      conn: conn,
-       chat: chat,
-       message: Chats.change_message(),
-       current_user: current_user
-     )}
+     assign(socket, chat: chat, message: Chats.change_message(), current_user: current_user)}
   end
 
 

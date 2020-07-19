@@ -40,7 +40,7 @@ defmodule Division.Paginator do
     total_results = count_total_results(chat_id)
     total_pages = count_total_pages(total_results)
 
-    mapa = %{
+    %{
       current_page: page,
       results_per_page: @results_per_page,
       total_pages: total_pages,
@@ -52,7 +52,7 @@ defmodule Division.Paginator do
   end
 
   defp execute_query(chat_id, page) do
-     
+
      msg_query =
         from msg in Message,
         limit: (^@results_per_page) ,
@@ -77,7 +77,7 @@ defmodule Division.Paginator do
 
   defp count_total_results(chat_id) do
     query = from m in Message, where: (m.chat_id == ^chat_id), select: m
-       
+
 
       Repo.aggregate(query, :count, :chat_id)
   end

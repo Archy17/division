@@ -44,10 +44,16 @@ defmodule DivisionWeb.ChatController do
     IO.puts "----дальше инспект чат--"
        IO.inspect(chat)
     IO.puts "-- дальше пошло на лай вью----"
+    
+    #data = %{conn.}
+
     LiveView.Controller.live_render(
       conn,
       ChatLiveView,
-      session: %{conn: conn, chat: chat, current_user: conn.assigns.current_user}
+      session: %{chat: chat, 
+      current_user: conn.assigns.current_user
+      
+    }
     )
   end
 
