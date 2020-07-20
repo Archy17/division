@@ -15,7 +15,7 @@ defmodule DivisionWeb.ChatLiveView do
   def mount(%{chat: chat, current_user: current_user}, socket) do
     # back = Division.Router.chat_path(socket, :show)
     ##chat_id = 666
-   # DivisionWeb.Endpoint.subscribe(topic(chat.list.id))
+    #DivisionWeb.Endpoint.subscribe(topic(chat.list.id))
             IO.puts "+++++++++Моунт++++++++"
    #         IO.inspect(topic(chat.id))
    #         IO.puts "+++++++++Моунт++++++++"
@@ -40,8 +40,10 @@ defmodule DivisionWeb.ChatLiveView do
   def handle_event("message", %{"message" => message_params}, socket) do
     {:ok, message} = Chats.create_message(message_params)
     IO.puts "++++Второй эвент --- Запись сообщения в бд -- ++++++"
-    chat = Chats.get_chat_with_messages(message.chat_id)
-    DivisionWeb.Endpoint.broadcast_from(self(), topic(chat.id), "message", %{chat: chat})
+    params = %{"id" => "1", "page" => "1"}
+
+    chat = Chats.get_chat_with_messages(message.chat_id, params)
+    DivisionWeb.Endpoint.broadcast_from(self(), topic(chat.list.id), "message", %{chat: chat})
     {:noreply, assign(socket, chat: chat, message: Chats.change_message())}
   end
 

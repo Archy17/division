@@ -142,21 +142,21 @@ defmodule Division.Chats do
   """
   def get_chat!(id), do: Repo.get!(Chat, id)
 
-  def get_chat_with_messages(chat_id) do
-    msg_query =
-        from msg in Message,
-        limit: 4,
-        order_by: [desc: msg.inserted_at],
-        preload: [:user]
+  # def get_chat_with_messages(chat_id) do
+  #  msg_query =
+  #      from msg in Message,
+  #      limit: 4,
+  #      order_by: [desc: msg.inserted_at],
+  #      preload: [:user]
 
-        query =
-        from c in Chat,
-        where: c.id == ^chat_id,
-        preload: [messages: ^msg_query]
+  #      query =
+  #      from c in Chat,
+  #      where: c.id == ^chat_id,
+  #      preload: [messages: ^msg_query]
 
-   Repo.one(query)
+  # Repo.one(query)
     
-  end
+  # end
 
   def get_chat_with_messages(chat_id, params) do
     #chat_id = params

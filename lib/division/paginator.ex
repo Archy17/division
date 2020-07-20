@@ -57,7 +57,7 @@ defmodule Division.Paginator do
         from msg in Message,
         limit: (^@results_per_page) ,
         offset: ((^page - 1) * ^@results_per_page),
-        order_by: [asc: msg.inserted_at],
+        order_by: [desc: msg.inserted_at],
         preload: [:user]
 
         query =
